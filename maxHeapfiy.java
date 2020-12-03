@@ -3,7 +3,6 @@ package Sort;
 import java.util.Arrays;
 
 public class maxHeapfiy {
-    public static int flag = 0;
     public static void main(String[] args) {
         int[] arr = new int[]{16, 4, 10, 14, 7, 9, 3, 2, 8, 1};
         convertHeap(arr, 1);
@@ -11,27 +10,35 @@ public class maxHeapfiy {
     }
 
 
-    public static void convertHeap(int[] arr, int i){
-        int l = getLeft(i);
-        int r = getRight(i);
-        int largest = i;
-        int temp = 0;
-        if(l < arr.length && arr[l] > arr[i]){
-            largest = l;
-        }
+    public static void convertHeap(int[] arr, int i) {
+        int l, r, largest, temp;
+        while (true) {
+            l = getLeft(i);
+            r = getRight(i);
+            largest = i;
+            if (l < arr.length && arr[l] > arr[i]) {
+                largest = l;
+            } else {
+                largest = i;
+            }
 
-        if(r < arr.length && arr[r] > arr[largest]){
-            largest = r;
-        }
+            if (r < arr.length && arr[r] > arr[largest]) {
+                largest = r;
+            }
 
-        if(largest != i){
+            if (largest == i) {
+                return;
+            }
+
+
             temp = arr[i];
             arr[i] = arr[largest];
             arr[largest] = temp;
-            convertHeap(arr, largest);
+
+            i = largest;
+            //            convertHeap(arr, largest);
         }
     }
-
     public static int getLeft(int i){
         return i == 0 ? 1: (i << 1) + 1;
     }
