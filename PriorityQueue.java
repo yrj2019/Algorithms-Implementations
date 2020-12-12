@@ -1,7 +1,8 @@
-package Algorithm.Sort;
+package Sort;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class PriorityQueue {
@@ -87,6 +88,14 @@ public class PriorityQueue {
         }
     }
 
+    public static void buildMaxHeap(ArrayList<Integer> arr){
+        int length = arr.size();
+        int div_point = (int)(Math.floor((length - 1) / 2));
+        for (int i = div_point; i >= 0; i--){
+            maxHeapify(arr, i);
+        }
+    }
+
     public static void maxHeapify(int[] arr, int i){
         int length = arr.length;
         int largest, l, r, temp;
@@ -115,6 +124,31 @@ public class PriorityQueue {
         }
     }
 
+    public static void maxHeapify(ArrayList<Integer> arr, int i){
+        int length = arr.size();
+        int largest, l, r, temp;
+        while(true){
+            l = getLeft(i);
+            r = getRight(i);
+            largest = i;
+            if(l < length && arr.get(l) > arr.get(largest)){
+                largest = l;
+            }else{
+                largest = i;
+            }
+
+            if(r < length && arr.get(r) > arr.get(largest)){
+                largest = r;
+            }
+
+            if(largest == i){
+                return;
+            }
+
+            Collections.swap(arr, i, largest);
+            largest = i;
+        }
+    }
     public static int getLeft(int i){
         return i == 0 ? 1: ((i << 1) + 1);
     }
