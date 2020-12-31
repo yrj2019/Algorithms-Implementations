@@ -10,14 +10,21 @@ public class quickSort {
     }
 
     public static void QuickSort(int[] arr, int p, int r){
-        if(p < r){
+	// First, find the baseline's index
+	// Second, iterate in first half
+	// Last, iterate in second half
+	// The judgement is p < r
+	if(p < r){
             int q = Partition(arr, p, r);
             QuickSort(arr, p, q - 1);
             QuickSort(arr, q + 1, r);
         }
     }
-
+    
+    // To find the gap lower than the baseline and upper than the baseline.
+    // The baseline is to divide the array into two parts, and then iterate in the two parts.
     public static int Partition(int[] arr, int p, int r){
+	// The baseline of an iteration
         int key = arr[r];
         int i = p;
         int temp1;
@@ -33,7 +40,7 @@ public class quickSort {
         temp1 = arr[i];
         arr[i] = arr[r];
         arr[r] = temp1;
-        System.out.println(Arrays.toString(arr));
+        // System.out.println(Arrays.toString(arr));
         return i;
     }
 }
