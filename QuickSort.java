@@ -1,96 +1,46 @@
-import java.util.ArrayList;
+package Algorithm.Sort;
+
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
-public class QuickSort {
+public class quickSort {
     public static void main(String[] args) {
-        ArrayList<Integer> arr = new ArrayList<Integer>();
-        Collections.addAll(arr, 2, 8, 7, 4, -2, 2, 1, -1, 4);
-//        quickSortDesc(arr, 0, arr.size() - 1);
-//        System.out.println(arr);
-        quickSortWithEqual(arr, 0, arr.size() - 1);
-        System.out.println(arr);
-
+        int[] arr = new int[]{2, 8, 7, 1, 3, 5, 6, 4};
+        QuickSort(arr, 0, arr.length - 1);
+        System.out.println(Arrays.toString(ar/r));
     }
 
-    public static void quickSort(ArrayList<Integer> arr, int p, int r){
-        if (p < r){
-            int gap = Partition(arr, p, r);
-            quickSort(arr, p, gap - 1);
-            quickSort(arr, gap + 1, r);
+    public static void QuickSort(int[] arr, int p, int r){
+	// First, find the baseline's index
+	// Second, iterate in first half
+	// Last, iterate in second half
+	// The judgement is p < r
+	if(p < r){
+            int q = Partition(arr, p, r);
+            QuickSort(arr, p, q - 1);
+            QuickSort(arr, q + 1, r);
         }
     }
-
-    public static void quickSortDesc(ArrayList<Integer> arr, int p, int r){
-        if (p < r){
-            int q = PartitionDesc(arr, p, r);
-            quickSortDesc(arr, 0, q - 1);
-            quickSortDesc(arr, q + 1,  r);
-        }
-    }
-
-    public static void quickSortWithEqual(ArrayList<Integer> arr, int p, int r){
-        if (p < r){
-            int[] window = PartitionWithEqual(arr, p, r);
-            quickSortWithEqual(arr, p, window[0] - 1);
-            quickSortWithEqual(arr, window[1] + 1, r);
-        }
-    }
-
-    public static int Partition(ArrayList<Integer> arr, int p, int r){
-        int key = arr.get(r);
-        int gap = p - 1;
-        for (int j = p; j <= r - 1; j++){
-            if (arr.get(j) <= key){
-                gap += 1;
-                Collections.swap(arr, gap, j);
+    
+    // To find the gap lower than the baseline and upper than the baseline.
+    // The baseline is to divide the array into two parts, and then iterate in the two parts.
+    public static int Partition(int[] arr, int p, int r){
+	// The baseline of an iteration
+        int key = arr[r];
+        int i = p;
+        int temp1;
+        for(int j = p; j <= r - 1; j++){
+            int temp2;
+            if(arr[j] <= key){
+                temp2 = arr[j];
+                arr[j] = arr[i];
+                arr[i] = temp2;
+                i += 1;
             }
         }
-
-        Collections.swap(arr, gap + 1, r);
-        return gap + 1;
-    }
-
-    public static int[] PartitionWithEqual(ArrayList<Integer> arr, int p, int r){
-        int slide1 = p, slide2 = p;
-        int key = arr.get(p);
-        for (int i = p + 1; i <= r; i++){
-            if (arr.get(i) < key){
-                int tmp = arr.get(i);
-                arr.set(i, arr.get(slide2 + 1));
-                arr.set(slide2 + 1, arr.get(slide1));
-                arr.set(slide1, tmp);
-                slide1 += 1;
-                slide2 += 1;
-            }else if(arr.get(i) == key){
-                Collections.swap(arr, slide2 + 1, i);
-                slide2 += 1;
-            }
-        }
-
-        int[] window = new int[]{slide1, slide2};
-//        System.out.println(Arrays.toString(window));
-        return window;
-    }
-
-    public static int PartitionDesc(ArrayList<Integer> arr, int p, int r){
-        int key = arr.get(r);
-        int gap = p - 1;
-        for (int j = p; j <= r - 1; j++){
-            if (arr.get(j) >= key){
-                gap += 1;
-                Collections.swap(arr, gap, j);
-            }
-        }
-
-        Collections.swap(arr, gap + 1, r);
-        return gap + 1;
-    }
-
-    public static int RandomizedPartition(ArrayList<Integer> arr, int p, int r){
-        int rand = (int)(p + Math.random() * (r - p));
-        Collections.swap(arr, r, rand);
-        return Partition(arr, p, r);
+        temp1 = arr[i];
+        arr[i] = arr[r];
+        arr[r] = temp1;
+        // System.out.println(Arrays.toString(arr));
+        return i;
     }
 }
